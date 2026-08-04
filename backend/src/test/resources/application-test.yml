@@ -1,0 +1,14 @@
+spring:
+  config:
+    activate:
+      on-profile: test
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+
+keystone:
+  cors:
+    allowed-origins: http://localhost:5173

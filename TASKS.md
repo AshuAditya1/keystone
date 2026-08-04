@@ -35,12 +35,12 @@ This file separates the completed planning baseline from future implementation. 
 ### Day 1 - Runnable monorepo skeleton
 
 - [ ] Resolve migration/security-critical portions of Q-009, Q-011, Q-013, Q-018, and Q-023 before fixing first-schema fields, currency, user credential creation, JWT runtime values, seed policy, or attachment-content storage.
-- [ ] Create `backend/` Spring Boot Java 21 Maven Wrapper project with approved dependencies and profiles.
-- [ ] Create `frontend/` React + TypeScript + Vite project with the approved frontend stack.
-- [ ] Add Docker Compose PostgreSQL with health check and non-secret environment placeholders.
-- [ ] Add backend/frontend Dockerfiles, formatting/lint configuration, `.editorconfig`, README starter, and health connectivity.
-- [ ] Add an initial Flyway connectivity migration without business controllers/entities.
-- [ ] Verify Compose config, database health, backend tests/startup, frontend lint/test/build, and frontend-to-health call.
+- [x] Create `backend/` Spring Boot Java 21 Maven Wrapper project with approved dependencies and profiles.
+- [x] Create `frontend/` React + TypeScript + Vite project with the approved frontend stack.
+- [x] Add Docker Compose PostgreSQL with health check and non-secret environment placeholders.
+- [x] Add backend/frontend Dockerfiles, formatting/lint configuration, `.editorconfig`, README starter, and health connectivity.
+- [x] Add an initial Flyway connectivity migration without business controllers/entities.
+- [ ] Verify Compose config, database health, backend tests/startup, frontend lint/test/build, and frontend-to-health call. All automated, packaging, and live HTTP checks passed on 2026-08-05; in-browser display confirmation remains manual because no browser runtime was available.
 
 ### Days 2-3 - Domain schema and seed foundation
 

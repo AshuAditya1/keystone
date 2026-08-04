@@ -1,7 +1,7 @@
 # Project KEYSTONE Test Matrix
 
-- **Status:** Planning baseline; no application tests have been executed yet
-- **Last updated:** 2026-08-04
+- **Status:** Living acceptance matrix; the Day 1 foundation subset has been executed
+- **Last updated:** 2026-08-05
 - **Purpose:** Trace each security, lifecycle, integrity, migration, client, contract, and deployment obligation to an objective automated or manual check.
 
 ## 1. Test principles and traceability

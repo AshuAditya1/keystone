@@ -5,7 +5,7 @@
 **Product:** Field-service management platform for Meridian Facilities Management
 
 **Delivery model:** Four-role web application and API
-**Implementation status:** No application code is authorized by this planning baseline
+**Implementation status:** Day 1 runnable foundation implemented; no product/business API is implemented
 
 ## 1. How to Read This Specification
 
