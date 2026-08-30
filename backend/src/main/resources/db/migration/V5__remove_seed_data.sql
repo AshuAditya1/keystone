@@ -1,0 +1,16 @@
+-- =====================================================================
+-- Project KEYSTONE — V5 remove seed data
+--
+-- This migration removes the demo seed users and data inserted in V2.
+-- DO NOT RUN THIS IN LOCAL DEVELOPMENT IF YOU NEED THE DEMO ACCOUNTS.
+-- =====================================================================
+
+-- DELETE FROM users WHERE email IN (
+--     'manager@meridian.dev',
+--     'dispatcher@meridian.dev',
+--     'tech1@meridian.dev',
+--     'tech2@meridian.dev',
+--     'alice@acme.dev'
+-- );
+--
+-- Uncomment the above in a real production environment to remove seed accounts.

@@ -1,0 +1,60 @@
+# KEYSTONE — local development stack.
+# Usage:
+#   docker compose up --build         # build + run everything
+#   docker compose up -d db           # just the database
+#   docker compose down               # stop
+#   docker compose down -v            # stop AND wipe the database (fresh start)
+#
+# After it's up:
+#   Frontend  -> http://localhost:3000
+#   Backend   -> http://localhost:8080/api/health
+#   Swagger   -> http://localhost:8080/swagger-ui.html
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: keystone-db
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-keystone}
+      POSTGRES_USER: ${POSTGRES_USER:-keystone}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-keystone}
+    ports:
+      - "5432:5432"
+    volumes:
+      - keystone-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-keystone} -d ${POSTGRES_DB:-keystone}"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  backend:
+    build:
+      context: ./backend
+    container_name: keystone-backend
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${POSTGRES_DB:-keystone}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-keystone}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-keystone}
+      JWT_SECRET: ${JWT_SECRET:-local-dev-secret-please-change-this-to-a-long-random-value-0123456789}
+      JWT_EXPIRATION_MINUTES: ${JWT_EXPIRATION_MINUTES:-120}
+      APP_CORS_ALLOWED_ORIGINS: ${APP_CORS_ALLOWED_ORIGINS:-http://localhost:3000,http://localhost:5173}
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-http://localhost:8080/api}
+    container_name: keystone-frontend
+    depends_on:
+      - backend
+    ports:
+      - "3000:80"
+
+volumes:
+  keystone-db-data:

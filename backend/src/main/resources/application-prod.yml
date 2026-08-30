@@ -1,0 +1,29 @@
+# Production profile (Render). Activated with SPRING_PROFILES_ACTIVE=prod.
+#
+# Two ways of supplying the database are both accepted, because the two documented
+# deploy paths supply different things and picking only one would break the other:
+#
+#   * render.yaml wires DB_HOST/DB_PORT/DB_NAME/DB_USERNAME/DB_PASSWORD from the
+#     managed database, since Render's `fromDatabase` exposes the parts and not a
+#     JDBC URL (its connection string uses the postgres:// scheme, which the JDBC
+#     driver will not accept).
+#   * setting the service up by hand in the dashboard is easier with a single
+#     SPRING_DATASOURCE_URL pasted from the database page.
+#
+# So SPRING_DATASOURCE_URL wins when present and the DB_* parts are the fallback.
+# If neither is set, startup fails naming DB_HOST, which is the right way to find
+# out you forgot — far better than silently defaulting to localhost and reporting
+# a connection refused from an address that was never going to work.
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://${DB_HOST}:${DB_PORT:5432}/${DB_NAME}}
+    username: ${SPRING_DATASOURCE_USERNAME:${DB_USERNAME}}
+    password: ${SPRING_DATASOURCE_PASSWORD:${DB_PASSWORD}}
+  jpa:
+    hibernate:
+      ddl-auto: none
+
+logging:
+  level:
+    root: INFO
+    com.meridian.keystone: INFO

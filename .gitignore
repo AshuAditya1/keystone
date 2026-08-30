@@ -1,0 +1,40 @@
+# ===== Java / Maven (backend) =====
+target/
+!.mvn/wrapper/maven-wrapper.jar
+*.class
+*.jar
+*.war
+*.log
+hs_err_pid*
+
+# ===== Node / Vite (frontend) =====
+node_modules/
+dist/
+dist-ssr/
+*.local
+.vite/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ===== Environment & secrets =====
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# ===== IDEs / editors =====
+.idea/
+*.iml
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# ===== OS / misc =====
+*.tmp
+
+# ===== Python (static-check helper) =====
+__pycache__/
+*.pyc
