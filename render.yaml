@@ -1,15 +1,3 @@
-# Render Blueprint for KEYSTONE.
-#
-# This provisions all three pieces (Postgres + backend + frontend) as
-# infrastructure-as-code. It is an OPTIONAL alternative to the click-through
-# dashboard steps in docs/PLAYBOOK.md Part 2.3 (which remain the reliable path
-# if Render's blueprint schema has drifted).
-#
-# To use: push this repo to GitHub, then in Render choose
-#   New -> Blueprint -> pick your repo. Render reads this file.
-# After the first deploy, set the two "sync: false" values in the dashboard
-# (they depend on the generated URLs).
-
 databases:
   - name: keystone-db
     databaseName: keystone
@@ -29,45 +17,52 @@ services:
     envVars:
       - key: SPRING_PROFILES_ACTIVE
         value: prod
+
       - key: DB_HOST
         fromDatabase:
           name: keystone-db
           property: host
+
       - key: DB_PORT
         fromDatabase:
           name: keystone-db
           property: port
+
       - key: DB_NAME
         fromDatabase:
           name: keystone-db
           property: database
+
       - key: DB_USERNAME
         fromDatabase:
           name: keystone-db
           property: user
+
       - key: DB_PASSWORD
         fromDatabase:
           name: keystone-db
           property: password
+
       - key: JWT_SECRET
-        generateValue: true          # Render generates a strong random secret
+        generateValue: true
+
       - key: JWT_EXPIRATION_MINUTES
         value: "120"
+
       - key: APP_CORS_ALLOWED_ORIGINS
-        sync: false                   # set to the frontend URL after first deploy
+        sync: false
 
   # ---------- Frontend (React static site) ----------
   - type: web
     runtime: static
     name: keystone-frontend
     rootDir: frontend
-    plan: free
     buildCommand: npm install && npm run build
     staticPublishPath: dist
     autoDeploy: true
     envVars:
       - key: VITE_API_BASE_URL
-        sync: false                   # set to https://<backend-url>/api after first deploy
+        sync: false
     routes:
       - type: rewrite
         source: /*
